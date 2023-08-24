@@ -1,23 +1,13 @@
-use std::collections::BTreeMap;
-
 use config::Config;
-use run_options::SimplifiedRunOptions;
-use traits::domain_control::DomainController;
 
-use crate::{run_options::RunOptions, tester::run_test};
+use crate::{logic::run_regular, run_options::RunOptions, tester::run_test};
 
 mod config;
+mod logic;
 mod run_options;
 mod services;
 mod tester;
 mod traits;
-
-fn run_regular(
-    _args: SimplifiedRunOptions,
-    _domain_controllers: BTreeMap<String, Box<dyn DomainController>>,
-) -> Result<(), Box<dyn std::error::Error>> {
-    todo!()
-}
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = RunOptions::parse();

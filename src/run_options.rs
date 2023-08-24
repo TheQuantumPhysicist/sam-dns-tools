@@ -7,7 +7,7 @@ const DEFAULT_CONFIG_FILE_PATH: &str = "config.yaml";
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Operation {
     SetRecord,
-    Clean,
+    Cleanup,
 }
 
 impl FromStr for Operation {
@@ -16,7 +16,7 @@ impl FromStr for Operation {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s.to_lowercase().as_str() {
             "set_record" => Ok(Operation::SetRecord),
-            "clean" => Ok(Operation::Clean),
+            "cleanup" => Ok(Operation::Cleanup),
             _ => Err(format!("Unknown operation: {}", s)),
         }
     }
@@ -37,9 +37,9 @@ pub struct RunOptions {
     #[clap(long)]
     pub domain_name: Option<String>,
 
-    /// Operation to be done. Possible values: `set_record` or `clean`
+    /// Operation to be done. Possible values: `set_record` or `cleanup`
     /// set_record: set the TXT DNS record to the provided validation string
-    /// clean: remove the TXT DNS record
+    /// cleanup: remove the TXT DNS record
     #[clap(long)]
     pub operation: Option<Operation>,
 
