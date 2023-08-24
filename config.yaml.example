@@ -1,0 +1,7 @@
+epik_configs:
+  - domain_name: "example.com"
+    signature: "ABCD-EFGH-1234-5678"
+  - domain_name: "example.net"
+    signature: "ABCD-EFGH-1234-5678"
+  - domain_name: "example.org"
+    signature: "ABCD-EFGH-1234-5678"
