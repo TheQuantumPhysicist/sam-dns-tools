@@ -15,7 +15,7 @@ impl FromStr for Operation {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s.to_lowercase().as_str() {
-            "set_record" => Ok(Operation::SetRecord),
+            "set-record" => Ok(Operation::SetRecord),
             "cleanup" => Ok(Operation::Cleanup),
             _ => Err(format!("Unknown operation: {}", s)),
         }
@@ -37,14 +37,14 @@ pub struct RunOptions {
     #[clap(long)]
     pub domain_name: Option<String>,
 
-    /// Operation to be done. Possible values: `set_record` or `cleanup`
-    /// set_record: set the TXT DNS record to the provided validation string
+    /// Operation to be done. Possible values: `set-record` or `cleanup`
+    /// set-record: set the TXT DNS record to the provided validation string
     /// cleanup: remove the TXT DNS record
     #[clap(long)]
     pub operation: Option<Operation>,
 
     /// The validation string to be set as TXT DNS record ($CERTBOT_VALIDATION goes here)
-    /// Only used with operation set_record, otherwise error
+    /// Only used with operation set-record, otherwise error
     #[clap(long)]
     pub validation_string: Option<String>,
 

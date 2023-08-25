@@ -39,6 +39,11 @@ fn set_record(
         value,
     )?;
 
+    println!(
+        "Record set end reached: {}={}",
+        ACME_CHALLENGE_SUBDOMAIN, value
+    );
+
     Ok(())
 }
 
@@ -51,6 +56,11 @@ fn cleanup(
         traits::domain_control::DnsRecordType::TXT,
         Some(value),
     )?;
+
+    println!(
+        "Cleanup end reached for: {}={}",
+        ACME_CHALLENGE_SUBDOMAIN, value
+    );
 
     Ok(())
 }
