@@ -1,40 +1,51 @@
 # Certbot DNS Auth Hook
 
-Note: This is an unofficial software that I developed to solve a problem that I have. You're welcome to contribute since it's designed to be extensible.
+Note: This is an unofficial software that I developed to solve a problem that I had. You're welcome to contribute since it's designed to be extensible.
 
 ## Introduction
 
-For [letsencrypt](https://letsencrypt.org/) and its Certbot's challenge of type DNS-01, where a TXT record is required to be added to the DNS zone of the domain, this script automates the process of adding and removing the TXT record.
+For [letsencrypt](https://letsencrypt.org/) and its Certbot's challenge of type DNS-01 to sign Wildcard certificates for domains, a TXT record is required to be added to the DNS records of the domain, this script automates the process of adding and removing the TXT record.
 
 In Certbot, the `--manual-auth-hook` and `--manual-cleanup-hook` options are used to specify the script to be executed before and after the challenge. This program is designed to be called in these scripts.
 
-I developed this program because I love for my tools to be reusable, testable and to be written in such a way where errors are impossible to happen. I hate writing random bash scripts to do this, so I spent a few hours to create the first version of this.
+I developed this program because I love for my tools to be reusable, testable and to be written in such a way where errors are impossible to happen. I hate writing random bash scripts to do this with weird curl commands, so I spent a few hours to create the first version of this.
 
 ### Capabilities
 
 This program is very simple by design. It can do two things:
 
-- Add/Remove/List DNS host records using https calls
+- Modify DNS records as per certbot requirements through the supported add/remove/list DNS host records using https calls
 - Test the implementation of a specific DNS provider automatically (for both testing the health of your setup and for adding new DNS providers)
+
+With the test functionality, you can have a cron job that will daily call this for you to test that your DNS calls are working correctly, and on failure, send you an email to notify you of the error. When the time comes for your certbot renewal, you can be sure that your DNS provider calls are working correctly.
 
 ## Available DNS Providers
 
-I started this for myself, where I use Epik.com, but you're welcome to add more services and add it to the list.
+I started this for myself, where I use Epik.com as domain provider, but you're welcome to add more services and add it to the list.
 
 - Epik.com
 
 ## Usage
+
+This program isn't meant to be installed. I don't mind cloning it from github and running it directly.
+
+In order to use this program with certbot, you can clone the repository, and then add the hook scripts provided as follows, in the directory where you cloned the repository:
+
+```bash
+certbot ${MoreArgumentsForYourDomain} --manual-auth-hook ./dns_auth_hook.sh --manual-cleanup-hook dns_cleanup_hook.sh
+```
+
+These scripts are in this repository. They are made to be used as is with the source code. Most likely you won't need to change anything in them. You should have [Rust installed](https://www.rust-lang.org/tools/install) so that cargo works.
+
+**SECURITY NOTE**: It is not recommended to run this program as root. This is because cargo downloads dependencies and compiles them. While it's extremely unlikely that any of the dependencies have malicious code, I can't guarantee that for you and I'm paranoid by nature. So, it's better to run this program as a normal user. After all the security trade-offs are up to you.
+
+### Low level usage
 
 To see the available command line arguments:
 
 ```bash
 cargo run -- --help
 ```
-
-
-This program isn't meant to be installed. I don't mind cloning it from github and running it directly.
-
-You can just clone it and run it with these commands:
 
 ### Configuration file
 
