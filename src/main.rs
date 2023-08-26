@@ -19,10 +19,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let config = Config::from_file_or_default(&args.config_file_path)?;
 
-    println!(
-        "Starting with config: {:?}",
-        serde_yaml::to_string(&config)?
-    );
+    println!("Starting with config: {:?}", config);
 
     let domain_controllers = config.into_domain_controllers();
 
