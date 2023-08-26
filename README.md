@@ -35,6 +35,13 @@ In order to use this program with certbot, you can clone the repository, and the
 certbot ${MoreArgumentsForYourDomain} --manual-auth-hook ./dns_auth_hook.sh --manual-cleanup-hook dns_cleanup_hook.sh
 ```
 
+If you'd like to use a proxy, define the environment variable `PROXY_FOR_CERTBOT_DNS_HOOK` to be the proxy URL. For example:
+
+```bash
+export PROXY_FOR_CERTBOT_DNS_HOOK=socks5://1.2.3.4:1080
+certbot ${MoreArgumentsForYourDomain} --manual-auth-hook ./dns_auth_hook.sh --manual-cleanup-hook dns_cleanup_hook.sh
+```
+
 These scripts are in this repository. They are made to be used as is with the source code. Most likely you won't need to change anything in them. You should have [Rust installed](https://www.rust-lang.org/tools/install) so that cargo works.
 
 **SECURITY NOTE**: It is not recommended to run this program as root. This is because cargo downloads dependencies and compiles them. While it's extremely unlikely that any of the dependencies have malicious code, I can't guarantee that for you and I'm paranoid by nature. So, it's better to run this program as a normal user. After all the security trade-offs are up to you.
@@ -59,6 +66,12 @@ Every service provider has its own way of authenticating and authorizing API cal
 
 ```bash
 cargo run -- --test-run
+```
+
+or with some socks5 proxy (to test your DNS provider from a whitelisted IP):
+
+```bash
+cargo run -- --test-run --proxy socks5://1.2.3.4:1080
 ```
 
 This will test all the domains in the configuration file.
