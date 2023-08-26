@@ -1,6 +1,8 @@
 use config::Config;
 
-use crate::{logic::run_regular, run_options::RunOptions, tester::run_test};
+use crate::{
+    logic::run_regular, run_options::RunOptions, services::helpers::build_client, tester::run_test,
+};
 
 mod config;
 mod logic;
@@ -23,9 +25,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let domain_controllers = config.into_domain_controllers();
 
+    let proxy = args.proxy.clone();
+    let client_maker = Box::new(|| build_client(proxy.clone()));
+
     match args.test_run {
-        true => run_test(domain_controllers),
-        false => run_regular(args.into_simplified(), domain_controllers),
+        true => run_test(client_maker.as_ref(), domain_controllers),
+        false => run_regular(
+            client_maker.as_ref(),
+            args.into_simplified(),
+            domain_controllers,
+        ),
     }?;
 
     Ok(())

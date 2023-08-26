@@ -35,13 +35,18 @@ impl Epik {
 }
 
 impl Epik {
-    fn list_full_dns_records(&self) -> Result<EpikDnsRecordsResponse, Error> {
+    fn list_full_dns_records(
+        &self,
+        client_maker: &dyn Fn() -> reqwest::blocking::Client,
+    ) -> Result<EpikDnsRecordsResponse, Error> {
         let url = format!(
             "https://usersapiv2.epik.com/v2/domains/{}/records?SIGNATURE={}",
             self.domain_name, self.signature
         );
 
-        let resp = reqwest::blocking::get(url)?;
+        let client = client_maker();
+
+        let resp = client.request(Method::GET, url).send()?;
 
         if !resp.status().is_success() {
             return Err(Error::Reqwest(resp.error_for_status().unwrap_err()));
@@ -57,13 +62,17 @@ impl Epik {
         Ok(resp_json)
     }
 
-    fn delete_dns_record(&self, id: &str) -> Result<(), Error> {
+    fn delete_dns_record(
+        &self,
+        client_maker: &dyn Fn() -> reqwest::blocking::Client,
+        id: &str,
+    ) -> Result<(), Error> {
         let url = format!(
             "https://usersapiv2.epik.com/v2/domains/{}/records?SIGNATURE={}&ID={id}",
             self.domain_name, self.signature
         );
 
-        let client = reqwest::blocking::Client::new();
+        let client = client_maker();
 
         let resp = client.request(Method::DELETE, url).send()?;
 
@@ -128,6 +137,7 @@ struct CreateHostRecordsPayload {
 impl DomainController for Epik {
     fn add_dns_record(
         &self,
+        client_maker: &dyn Fn() -> reqwest::blocking::Client,
         name: &str,
         record_type: DnsRecordType,
         value: &str,
@@ -148,7 +158,7 @@ impl DomainController for Epik {
         // requests are wrapped in this "create_host_records_payload" key
         let body = format!("{{ \"create_host_records_payload\": {body} }}");
 
-        let client = reqwest::blocking::Client::new();
+        let client = client_maker();
 
         let resp = client.post(url).body(body).send()?;
 
@@ -163,11 +173,12 @@ impl DomainController for Epik {
 
     fn remove_dns_record(
         &self,
+        client_maker: &dyn Fn() -> reqwest::blocking::Client,
         name: &str,
         record_type: DnsRecordType,
         value: Option<&str>,
     ) -> Result<usize, Box<dyn std::error::Error>> {
-        let current_records = self.list_full_dns_records()?;
+        let current_records = self.list_full_dns_records(client_maker)?;
 
         let records_to_remove = current_records
             .data
@@ -185,18 +196,21 @@ impl DomainController for Epik {
 
         records_to_remove
             .into_iter()
-            .try_for_each(|id| self.delete_dns_record(&id))?;
+            .try_for_each(|id| self.delete_dns_record(client_maker, &id))?;
 
         Ok(size_to_remove)
     }
 
-    fn list_dns_records(&self) -> Result<Vec<DnsRecord>, Box<dyn std::error::Error>> {
+    fn list_dns_records(
+        &self,
+        client_maker: &dyn Fn() -> reqwest::blocking::Client,
+    ) -> Result<Vec<DnsRecord>, Box<dyn std::error::Error>> {
         let url = format!(
             "https://usersapiv2.epik.com/v2/domains/{}/records?SIGNATURE={}",
             self.domain_name, self.signature
         );
 
-        let client = reqwest::blocking::Client::new();
+        let client = client_maker();
 
         let resp = client.get(url).send()?;
 

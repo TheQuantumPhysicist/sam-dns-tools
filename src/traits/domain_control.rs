@@ -64,6 +64,7 @@ pub trait DomainController {
     /// Add a DNS record to the domain provided
     fn add_dns_record(
         &self,
+        client_maker: &dyn Fn() -> reqwest::blocking::Client,
         name: &str,
         record_type: DnsRecordType,
         value: &str,
@@ -74,12 +75,15 @@ pub trait DomainController {
     /// Note: partial removal is possible, if an error occurs while removing a record
     fn remove_dns_record(
         &self,
+        client_maker: &dyn Fn() -> reqwest::blocking::Client,
         name: &str,
         record_type: DnsRecordType,
         value: Option<&str>,
     ) -> Result<usize, Box<dyn std::error::Error>>;
 
     /// List all DNS records for the domain provided
-
-    fn list_dns_records(&self) -> Result<Vec<DnsRecord>, Box<dyn std::error::Error>>;
+    fn list_dns_records(
+        &self,
+        client_maker: &dyn Fn() -> reqwest::blocking::Client,
+    ) -> Result<Vec<DnsRecord>, Box<dyn std::error::Error>>;
 }
