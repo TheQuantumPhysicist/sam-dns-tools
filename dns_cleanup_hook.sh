@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Running auth hook cleanup for domain: $CERTBOT_DOMAIN" with validation string $CERTBOT_VALIDATION
+echo "Running auth hook cleanup for domain: $CERTBOT_DOMAIN with validation string $CERTBOT_VALIDATION"
 
 # the env var PROXY_FOR_CERTBOT_DNS_HOOK is the proxy to be used
 if [ -z "$PROXY_FOR_CERTBOT_DNS_HOOK" ]; then
