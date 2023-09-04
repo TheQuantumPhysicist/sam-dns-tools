@@ -27,6 +27,8 @@ I started this for myself, where I use Epik.com as domain provider, but you're w
 
 ## Usage
 
+First step in using this program, is to input your configuration of your domains in the `config.yaml` file. See the [Configuration file](#configuration-file) section for more details. Once you do, you can test your configuration using the `--test-run` option. See the [Test-run](#test-run) section for more details. If the tests pass, you're ready to use this program with certbot.
+
 This program isn't meant to be installed. I don't mind cloning it from github and running it directly.
 
 In order to use this program with certbot, you can clone the repository, and then add the hook scripts provided as follows, in the directory where you cloned the repository:
