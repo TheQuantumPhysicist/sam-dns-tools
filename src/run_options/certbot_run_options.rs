@@ -2,8 +2,6 @@ use std::str::FromStr;
 
 use clap::Parser;
 
-const DEFAULT_CONFIG_FILE_PATH: &str = "config.yaml";
-
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Operation {
     SetRecord,
@@ -50,7 +48,7 @@ pub struct CertbotRunOptions {
 
     /// The path to the config file
     /// If not provided, the default value is used, config.yaml
-    #[clap(long, default_value_t = DEFAULT_CONFIG_FILE_PATH.to_string())]
+    #[clap(long, default_value_t = super::DEFAULT_CONFIG_FILE_PATH.to_string())]
     pub config_file_path: String,
 
     /// Proxy address, such as http, https or socks5, through which the connections to the API will be made
@@ -99,8 +97,8 @@ impl CertbotRunOptions {
         Ok(())
     }
 
-    pub fn into_simplified(self) -> SimplifiedRunOptions {
-        SimplifiedRunOptions {
+    pub fn into_simplified(self) -> SimplifiedCertbotRunOptions {
+        SimplifiedCertbotRunOptions {
             domain_name: self.domain_name.unwrap(),
             operation: self.operation.unwrap(),
             validation_string: self.validation_string.unwrap(),
@@ -108,7 +106,7 @@ impl CertbotRunOptions {
     }
 }
 
-pub struct SimplifiedRunOptions {
+pub struct SimplifiedCertbotRunOptions {
     pub domain_name: String,
     pub operation: Operation,
     pub validation_string: String,

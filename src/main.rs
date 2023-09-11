@@ -6,6 +6,7 @@ mod run_options;
 
 mod certbot;
 mod config;
+mod dyndns;
 mod services;
 mod traits;
 
@@ -14,5 +15,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     match args.command {
         run_options::RunCommand::Certbot(options) => certbot::run(options),
+        run_options::RunCommand::Dyndns(options) => dyndns::run(options),
     }
 }

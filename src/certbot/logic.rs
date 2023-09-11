@@ -1,4 +1,4 @@
-use certbot_run_options::SimplifiedRunOptions;
+use certbot_run_options::SimplifiedCertbotRunOptions;
 pub use std::collections::BTreeMap;
 use traits::domain_control::DomainController;
 
@@ -8,7 +8,7 @@ const ACME_CHALLENGE_SUBDOMAIN: &str = "_acme-challenge";
 
 pub fn run_regular(
     client_maker: &dyn Fn() -> reqwest::blocking::Client,
-    args: SimplifiedRunOptions,
+    args: SimplifiedCertbotRunOptions,
     domain_controllers: BTreeMap<String, Box<dyn DomainController>>,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let domain_controller = domain_controllers

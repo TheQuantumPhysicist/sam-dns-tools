@@ -1,9 +1,11 @@
 {
     "editor.formatOnSave": true,
     "cSpell.words": [
+        "dyndns",
         "EFGH",
         "epik",
         "letsencrypt",
+        "Reqwest",
         "serde",
         "struct"
     ],

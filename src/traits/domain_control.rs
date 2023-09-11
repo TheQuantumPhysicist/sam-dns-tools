@@ -53,7 +53,7 @@ impl FromStr for DnsRecordType {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct DnsRecord {
     pub name: String,
     pub record_type: DnsRecordType,

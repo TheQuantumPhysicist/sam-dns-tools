@@ -1,9 +1,9 @@
 use clap::{Parser, Subcommand};
 
-use self::certbot_run_options::CertbotRunOptions;
-
 pub mod certbot_run_options;
-pub mod dnscontrol_run_options;
+pub mod dyndns_run_options;
+
+const DEFAULT_CONFIG_FILE_PATH: &str = "config.yaml";
 
 #[derive(Parser)]
 pub struct RunOptions {
@@ -14,5 +14,7 @@ pub struct RunOptions {
 #[derive(Subcommand, Clone, Debug)]
 pub enum RunCommand {
     /// Run the certbot mode to do the DNS-01 test.
-    Certbot(CertbotRunOptions),
+    Certbot(certbot_run_options::CertbotRunOptions),
+    /// Run the dyndns mode to update the DNS record of a specific subdomain.
+    Dyndns(dyndns_run_options::DynDnsRunOptions),
 }

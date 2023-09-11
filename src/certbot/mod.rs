@@ -13,7 +13,7 @@ pub fn run(options: CertbotRunOptions) -> Result<(), Box<dyn std::error::Error>>
         .check()
         .unwrap_or_else(|e| panic!("Arguments provided are not correct: {}", e));
 
-    println!("Starting with args: {:?}", &options);
+    println!("Starting in certbot mode with args: {:?}", &options);
 
     let config = Config::from_file_or_default(&options.config_file_path)?;
 
