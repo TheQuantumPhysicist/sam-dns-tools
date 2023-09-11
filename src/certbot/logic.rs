@@ -1,8 +1,8 @@
-use run_options::SimplifiedRunOptions;
+use certbot_run_options::SimplifiedRunOptions;
 pub use std::collections::BTreeMap;
 use traits::domain_control::DomainController;
 
-use crate::{run_options, traits};
+use crate::{run_options::certbot_run_options, traits};
 
 const ACME_CHALLENGE_SUBDOMAIN: &str = "_acme-challenge";
 
@@ -23,10 +23,10 @@ pub fn run_regular(
     let value = &args.validation_string;
 
     match args.operation {
-        run_options::Operation::SetRecord => {
+        certbot_run_options::Operation::SetRecord => {
             set_record(client_maker, domain_controller.as_ref(), value)?
         }
-        run_options::Operation::Cleanup => {
+        certbot_run_options::Operation::Cleanup => {
             cleanup(client_maker, domain_controller.as_ref(), value)?
         }
     }

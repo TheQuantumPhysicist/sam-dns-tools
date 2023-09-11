@@ -23,7 +23,7 @@ impl FromStr for Operation {
 }
 
 #[derive(Parser, Clone, Debug, Default)]
-pub struct RunOptions {
+pub struct CertbotRunOptions {
     /// Test run
     /// If set, the program will test setting, reading and erasing a DNS record, and ensuring the value is correctly set
     /// This is useful in case more services are added in the future
@@ -60,11 +60,7 @@ pub struct RunOptions {
     pub proxy: Option<String>,
 }
 
-impl RunOptions {
-    pub fn parse() -> Self {
-        RunOptions::parse_from(std::env::args_os())
-    }
-
+impl CertbotRunOptions {
     pub fn check(&self) -> Result<(), String> {
         if self.test_run {
             if self.domain_name.is_some() {
