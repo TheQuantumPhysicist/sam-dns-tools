@@ -10,7 +10,7 @@ In Certbot, the `--manual-auth-hook` and `--manual-cleanup-hook` options are use
 
 I developed this program because I love for my tools to be reusable, testable and to be written in such a way where errors are impossible to happen. I hate writing random bash scripts to do this with weird curl commands, so I spent a few hours to create the first version of this.
 
-This program also has some extra services for DNS control. The default subcommand is `certbot`, but feel free to try the others. It can be used for any other automation tasks that require DNS control.
+This program also has some extra features for DNS control, such as dyndns. The default subcommand is `certbot`, but feel free to try the others. It can be used for any other automation tasks that require DNS control.
 
 ### Capabilities
 

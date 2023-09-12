@@ -1,8 +1,8 @@
 mod logic;
 
 use crate::{
-    certbot::logic::run_regular, config::Config,
-    run_options::certbot_run_options::CertbotRunOptions, services::helpers::build_client,
+    certbot::logic::run_regular, config::Config, dns_providers::helpers::build_client,
+    run_options::certbot_run_options::CertbotRunOptions,
 };
 
 pub fn run(options: CertbotRunOptions) -> Result<(), Box<dyn std::error::Error>> {

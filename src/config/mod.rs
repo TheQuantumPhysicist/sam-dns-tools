@@ -5,7 +5,7 @@ use std::{
 
 use serde::{Deserialize, Serialize};
 
-use crate::{services::epik::Epik, traits::domain_control::DomainController};
+use crate::{dns_providers::epik::Epik, traits::domain_control::DomainController};
 
 #[derive(thiserror::Error, Debug)]
 pub enum ConfigError {

@@ -6,8 +6,8 @@ use crate::run_options::RunOptions;
 mod run_options;
 
 mod config;
+mod dns_providers;
 mod features;
-mod services;
 mod traits;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {

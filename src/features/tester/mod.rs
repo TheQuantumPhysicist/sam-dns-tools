@@ -1,7 +1,6 @@
 use crate::{
-    config::Config,
+    config::Config, dns_providers::helpers::build_client,
     run_options::test_domain_controllers_run_options::TestDomainControllersRunOptions,
-    services::helpers::build_client,
 };
 
 mod tester;

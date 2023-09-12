@@ -2,7 +2,7 @@ use std::collections::BTreeMap;
 
 use rand::Rng;
 
-use crate::{services::helpers, traits::domain_control::DomainController};
+use crate::{dns_providers::helpers, traits::domain_control::DomainController};
 
 fn random_string(length: usize) -> String {
     use rand::distributions::Alphanumeric;

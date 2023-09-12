@@ -1,6 +1,6 @@
 use crate::{
-    config::Config, dyndns::logic::run_regular, run_options::dyndns_run_options::DynDnsRunOptions,
-    services::helpers::build_client,
+    config::Config, dns_providers::helpers::build_client, dyndns::logic::run_regular,
+    run_options::dyndns_run_options::DynDnsRunOptions,
 };
 
 mod logic;
