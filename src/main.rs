@@ -1,14 +1,13 @@
 use clap::Parser;
+use features::{certbot, dyndns, tester};
 
 use crate::run_options::RunOptions;
 
 mod run_options;
 
-mod certbot;
 mod config;
-mod dyndns;
+mod features;
 mod services;
-mod tester;
 mod traits;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
