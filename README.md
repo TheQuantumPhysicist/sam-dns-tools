@@ -29,7 +29,7 @@ I started this for myself, where I use Epik.com as domain provider, but you're w
 
 ## Usage
 
-First step in using this program, is to input your configuration of your domains in the `config.yaml` file. See the [Configuration file](#configuration-file) section for more details. Once you do, you can test your configuration using the `--test-run` option. See the [Test-run](#test-run) section for more details. If the tests pass, you're ready to use this program with certbot.
+First step in using this program, is to input your configuration of your domains in the `config.yaml` file. See the [Configuration file](#configuration-file) section for more details. Once you do, you can test your configuration using the `test` command (`cargo run -- test`). See the [Test-run](#test-run) section for more details. If the tests pass, you're ready to use this program with certbot.
 
 This program isn't meant to be installed. I don't mind cloning it from github and running it directly.
 
@@ -69,13 +69,13 @@ Every service provider has its own way of authenticating and authorizing API cal
 ### Test-run
 
 ```bash
-cargo run -- certbot --test-run
+cargo run -- test
 ```
 
 or with some socks5 proxy (to test your DNS provider from a whitelisted IP):
 
 ```bash
-cargo run -- certbot --test-run --proxy socks5://1.2.3.4:1080
+cargo run -- test --proxy socks5://1.2.3.4:1080
 ```
 
 This will test all the domains in the configuration file.
@@ -92,7 +92,7 @@ To add new DNS providers, you need to:
 2. Implement the DomainController trait for the DNS provider struct. (See how epik.rs is implemented). This trait is used to add/remove/list DNS records.
 3. Add the DNS provider struct deserialization to the `Config` struct in the config module. (See how epik.rs is implemented). All configurations that are listed must be deserialized into Vec<DNSProvider>, just like it's done for Vec<Epik>.
 4. The method `Config::into_domain_controllers()` should be able to add your configuration to the list of domain controllers.
-5. At this point you're good to start adding configurations in the config.yaml file and test your implementation using `cargo run -- certbot --test-run`. If the tests pass, that means your implementation is correct.
+5. At this point you're good to start adding configurations in the config.yaml file and test your implementation using `cargo run -- test` (with or without proxy, depending on your DNS provider configuration and IP whitelisting). If the tests pass, that means your implementation is correct.
 
 ## License
 

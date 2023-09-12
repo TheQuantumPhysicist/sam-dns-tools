@@ -22,14 +22,6 @@ impl FromStr for Operation {
 
 #[derive(Parser, Clone, Debug, Default)]
 pub struct CertbotRunOptions {
-    /// Test run
-    /// If set, the program will test setting, reading and erasing a DNS record, and ensuring the value is correctly set
-    /// This is useful in case more services are added in the future
-    /// This does not need a validation string. Random strings will be generated, set and deleted.
-    /// This will run for all domains and services in the config file.
-    #[clap(long, default_value = "false")]
-    pub test_run: bool,
-
     /// the domain name, whose DNS records will be updated ($CERTBOT_DOMAIN goes here)
     /// Note that this domain's configuration must be present in the config file
     #[clap(long)]
@@ -60,39 +52,16 @@ pub struct CertbotRunOptions {
 
 impl CertbotRunOptions {
     pub fn check(&self) -> Result<(), String> {
-        if self.test_run {
-            if self.domain_name.is_some() {
-                return Err(
-                    "Domain name should not be provided in test mode. All domains will be tested."
-                        .to_string(),
-                );
-            }
+        if self.domain_name.is_none() {
+            return Err("Domain name not provided".to_string());
+        }
 
-            if self.operation.is_some() {
-                return Err(
-                    "Operation should not be provided in test mode. All operations will be tested."
-                        .to_string(),
-                );
-            }
+        if self.operation.is_none() {
+            return Err("Operation not provided".to_string());
+        }
 
-            if self.validation_string.is_some() {
-                return Err(
-                    "Validation string should not be provided in test mode. Random strings will be used."
-                        .to_string(),
-                );
-            }
-        } else {
-            if self.domain_name.is_none() {
-                return Err("Domain name not provided".to_string());
-            }
-
-            if self.operation.is_none() {
-                return Err("Operation not provided".to_string());
-            }
-
-            if self.validation_string.is_none() {
-                return Err("Validation string not provided".to_string());
-            }
+        if self.validation_string.is_none() {
+            return Err("Validation string not provided".to_string());
         }
         Ok(())
     }
