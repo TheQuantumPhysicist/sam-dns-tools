@@ -14,7 +14,7 @@ pub enum Error {
 pub const DEFAULT_TTL: u32 = 360;
 pub const DEFAULT_AUX: u32 = 0;
 
-/// Epic requires only the signature string to be provided for the requests
+/// Epik requires only the signature string to be provided for the requests
 /// (that are submitted in GET requests).
 /// Their security is based on IP address whitelisting.
 ///
