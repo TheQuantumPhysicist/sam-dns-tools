@@ -1,7 +1,8 @@
 /// DNS TXT records may or may not have quotes. Quotes shouldn't matter.
+/// If provided is None, it means that the value won't be compared.
 pub fn compare_dns_txt_value(current: &str, provided: Option<&str>) -> bool {
     match provided {
-        None => current.is_empty(),
+        None => true,
         Some(provided) => current == provided || current == format!("\"{}\"", provided),
     }
 }

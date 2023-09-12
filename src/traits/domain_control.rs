@@ -70,7 +70,8 @@ pub trait DomainController {
         value: &str,
     ) -> Result<(), Box<dyn std::error::Error>>;
 
-    /// Remove a DNS record from the domain provided
+    /// Remove a DNS record from the domain provided with the provided name (subdomain) and value.
+    /// If value is None, all records with the provided name will be removed.
     /// Returns the number of records removed
     /// Note: partial removal is possible, if an error occurs while removing a record
     fn remove_dns_record(

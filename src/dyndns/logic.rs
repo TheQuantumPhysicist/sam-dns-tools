@@ -36,7 +36,7 @@ pub fn run_regular(
 
     set_ipv4_record(client_maker, domain_controller.as_ref(), &args.subdomain)?;
 
-    println!("DynDns end reached. If nothing was printed, the record was already set correctly.");
+    println!("DynDns end reached. If nothing was printed, the record was already set correctly.\n");
 
     Ok(())
 }
@@ -77,7 +77,7 @@ fn set_ipv4_record(
             // Remove the current incorrect record
             domain_controller.remove_dns_record(
                 client_maker,
-                &subdomain,
+                subdomain,
                 DNS_RECORD_TYPE,
                 Some(&record.value),
             )?;
@@ -131,7 +131,7 @@ fn remove_reduntant_records(
         domain_controller
             .remove_dns_record(
                 client_maker,
-                &subdomain,
+                subdomain,
                 record.record_type,
                 Some(&record.value),
             )
