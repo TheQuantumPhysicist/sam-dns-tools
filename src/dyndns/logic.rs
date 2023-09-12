@@ -50,6 +50,8 @@ fn set_ipv4_record(
 
     let my_ip_address = get_my_routable_ip_address()?;
 
+    println!("Found local routable ip address: {}", my_ip_address);
+
     let records = domain_controller.list_dns_records(client_maker)?;
 
     let current_ipv4_records = records
