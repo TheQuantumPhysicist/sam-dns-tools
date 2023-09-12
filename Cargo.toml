@@ -1,5 +1,5 @@
 [package]
-name = "certbot_dns_auth_hook"
+name = "sam-dns-tools"
 version = "0.1.0"
 edition = "2021"
 
