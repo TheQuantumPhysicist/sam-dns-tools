@@ -5,9 +5,9 @@ use rand::Rng;
 use crate::{dns_providers::helpers, traits::domain_control::DomainController};
 
 fn random_string(length: usize) -> String {
-    use rand::distributions::Alphanumeric;
+    use rand::distr::Alphanumeric;
 
-    rand::thread_rng()
+    rand::rng()
         .sample_iter(&Alphanumeric)
         .take(length)
         .map(char::from)
@@ -104,7 +104,7 @@ fn test_multiple_add_and_delete_record(
         "Testing domain controller's multiple records add/remove for domain: {}",
         domain_name
     );
-    let record_count = rand::thread_rng().gen_range::<usize, _>(5..10);
+    let record_count = rand::rng().random_range::<usize, _>(5..10);
     let key = random_string(10).to_lowercase();
     let values = (0..record_count)
         .map(|_| random_string(32).to_lowercase())

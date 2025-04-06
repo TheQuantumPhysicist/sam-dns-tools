@@ -145,7 +145,7 @@ fn get_my_routable_ip_address() -> Result<Ipv4Addr, Box<dyn std::error::Error>> 
     let services = {
         let mut services = IP_ADDRESSES_SERVICES.to_vec();
 
-        services.shuffle(&mut rand::thread_rng());
+        services.shuffle(&mut rand::rng());
 
         services
     };
