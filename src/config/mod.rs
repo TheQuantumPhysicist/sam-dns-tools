@@ -14,7 +14,7 @@ pub enum ConfigError {
     #[error("File exists but it could not be read to a string for parsing: {0}")]
     FileExistsButCannotBeReadToString(std::io::Error),
     #[error("Could not parse file to config; either invalid yaml or missing config: {0}")]
-    FileFormatCouldNotBeParsed(serde_yaml::Error),
+    FileFormatCouldNotBeParsed(serde_yml::Error),
 }
 
 /// The configs of different providers
@@ -44,7 +44,7 @@ impl Config {
         let config_file_data = std::fs::read_to_string(path)
             .map_err(ConfigError::FileExistsButCannotBeReadToString)?;
 
-        let config: Config = serde_yaml::from_str(&config_file_data)
+        let config: Config = serde_yml::from_str(&config_file_data)
             .map_err(ConfigError::FileFormatCouldNotBeParsed)?;
 
         Ok(config)
