@@ -33,19 +33,13 @@ impl DynDnsRunOptions {
             return Err("Account domain name not provided".to_string());
         }
 
-        if self.subdomain.is_none() {
-            return Err(
-                "The subdomain, for which the DNS record will be updated, not provided".to_string(),
-            );
-        }
-
         Ok(())
     }
 
     pub fn into_simplified(self) -> SimplifiedDynDnsRunOptions {
         SimplifiedDynDnsRunOptions {
             account_domain_name: self.account_domain_name.unwrap(),
-            subdomain: self.subdomain.unwrap(),
+            subdomain: self.subdomain.unwrap_or_default(),
         }
     }
 }

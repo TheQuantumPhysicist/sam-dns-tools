@@ -1,13 +1,22 @@
 {
     "editor.formatOnSave": true,
     "cSpell.words": [
+        "CTYPE",
         "dyndns",
         "EFGH",
         "epik",
+        "gosu",
         "letsencrypt",
+        "MKNOD",
+        "noninteractive",
+        "procps",
+        "procs",
         "Reqwest",
         "routable",
         "serde",
-        "struct"
+        "SETFCAP",
+        "SETPCAP",
+        "struct",
+        "tlsv"
     ],
 }

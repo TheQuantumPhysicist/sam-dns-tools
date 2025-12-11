@@ -1,0 +1,28 @@
+services:
+  dyndns-runner:
+    build: ./image-dyndns
+    container_name: dyndns-updater
+    restart: unless-stopped
+    volumes:
+      - ./data-dyndns/config.yaml:/config.yaml
+
+    environment:
+      DOMAIN_NAME: example.com
+
+      # Subdomain, for which to update DNS. "home" will become `home.example.com`
+      SUBDOMAIN: home
+
+      # How often to check DNS (in seconds)
+      INTERVAL: 1800
+
+      # Optional proxy
+      # PROXY: "socks5://proxy:12345"
+
+
+    security_opt:
+      - no-new-privileges=true
+    cap_drop:
+      - NET_RAW      # blocks raw sockets
+      - MKNOD        # blocks device node creation
+      - SETPCAP      # blocks changing caps of other procs
+      - SETFCAP      # blocks setting file capabilities
