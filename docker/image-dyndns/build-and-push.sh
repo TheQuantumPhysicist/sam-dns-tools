@@ -18,5 +18,8 @@ SOFTWARE_VERSION=$(grep '^version' Cargo.toml | head -n1 | cut -d '"' -f2)
 SOFTWARE_IMAGE_NAME=sam-dns-tools-dyndns
 IMAGE_NAME="$DOCKER_REGISTRY_HOST/$DOCKER_USERNAME/$SOFTWARE_IMAGE_NAME"
 
+echo "Building and pushing versioned..."
 docker buildx build -f docker/image-dyndns/Dockerfile --platform linux/amd64,linux/arm64 --push -t "$IMAGE_NAME:$SOFTWARE_VERSION" .
+echo "Building and pushing latest..."
 docker buildx build -f docker/image-dyndns/Dockerfile --platform linux/amd64,linux/arm64 --push -t "$IMAGE_NAME:latest" .
+echo "Done."
