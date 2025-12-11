@@ -1,6 +1,8 @@
 services:
   dyndns-runner:
-    build: ./image-dyndns
+    build:
+      context: ./image-dyndns/sam-dns-tools/
+      dockerfile: ./docker/image-dyndns/Dockerfile
     container_name: dyndns-updater
     restart: unless-stopped
     volumes:

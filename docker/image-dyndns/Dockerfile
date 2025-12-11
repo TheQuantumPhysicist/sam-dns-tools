@@ -16,7 +16,7 @@ RUN echo "LC_ALL=en_US.UTF-8" >> /etc/environment
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get update && apt-get install -y curl tmux nano net-tools procps htop git build-essential cmake pkg-config libssl-dev gosu
 
-COPY entrypoint.sh /usr/local/bin/
+COPY docker/image-dyndns/entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 ARG USER_ID=3883
@@ -24,6 +24,9 @@ ARG GROUP_ID=3883
 RUN groupadd --gid ${GROUP_ID} runner
 RUN useradd -m -u ${USER_ID} -g runner -s /bin/false runner
 RUN passwd -l runner
+
+COPY . /home/runner/sam-dns-tools/
+RUN  chown runner:runner -R /home/runner/sam-dns-tools/
 
 USER runner
 
@@ -34,7 +37,6 @@ WORKDIR /home/runner/
 ENV PATH="/home/runner/.cargo/bin:$PATH"
 RUN echo "export /home/runner/.cargo/bin:$PATH" > /home/runner/.bashrc
 
-COPY ../../ /home/runner/sam-dns-tools/
 RUN cd /home/runner/sam-dns-tools/
 WORKDIR /home/runner/sam-dns-tools/
 RUN (cargo update && cargo build --all) || (git checkout Cargo.lock && cargo build --all --locked)
@@ -54,7 +56,7 @@ ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["sh", "-c", "while true; do \
     /home/runner/app/sam-dns-tools dyndns \
     --account-domain-name=\"$DOMAIN_NAME\" \
-    ${PROXY:+--subdomain=$SUBDOMAIN} \
+    ${SUBDOMAIN:+--subdomain=$SUBDOMAIN} \
     ${PROXY:+--proxy=$PROXY} \
     --config-file-path \"$CONFIG_FILE_PATH\"; \
     sleep \"$INTERVAL\"; \
