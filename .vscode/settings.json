@@ -1,10 +1,12 @@
 {
     "editor.formatOnSave": true,
     "cSpell.words": [
+        "buildx",
         "CTYPE",
         "dyndns",
         "EFGH",
         "epik",
+        "Forgejo",
         "gosu",
         "letsencrypt",
         "MKNOD",
