@@ -155,8 +155,7 @@ fn get_my_routable_ip_address() -> Result<Ipv4Addr, Box<dyn std::error::Error>> 
         .into_iter()
         .map(get_my_ip_address_from_url)
         .find(|r| r.is_ok())
-        .ok_or(Box::new(std::io::Error::new(
-            std::io::ErrorKind::Other,
+        .ok_or(Box::new(std::io::Error::other(
             "Could not get public IP address from any of the services",
         )))??;
 
@@ -180,8 +179,7 @@ fn get_my_ip_address_from_url(url: &str) -> Result<Ipv4Addr, Box<dyn std::error:
         return Ok(ip_address);
     }
 
-    Err(Box::new(std::io::Error::new(
-        std::io::ErrorKind::Other,
+    Err(Box::new(std::io::Error::other(
         "Could not get public IP address from any of the services",
     )))
 }

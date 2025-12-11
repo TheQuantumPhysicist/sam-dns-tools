@@ -3,7 +3,7 @@ use crate::{
     run_options::test_domain_controllers_run_options::TestDomainControllersRunOptions,
 };
 
-mod tester;
+mod tester_inner;
 
 pub fn run(options: TestDomainControllersRunOptions) -> Result<(), Box<dyn std::error::Error>> {
     println!(
@@ -20,7 +20,7 @@ pub fn run(options: TestDomainControllersRunOptions) -> Result<(), Box<dyn std::
     let proxy = options.proxy.clone();
     let client_maker = Box::new(|| build_client(proxy.clone()));
 
-    tester::run_test(client_maker.as_ref(), domain_controllers)?;
+    tester_inner::run_test(client_maker.as_ref(), domain_controllers)?;
 
     Ok(())
 }

@@ -64,8 +64,7 @@ fn test_singular_add_and_delete_record(
                 crate::traits::domain_control::DnsRecordType::TXT,
                 value
             );
-            return Err(Box::new(std::io::Error::new(
-                std::io::ErrorKind::Other,
+            return Err(Box::new(std::io::Error::other(
                 "Record was not found in the list of recorded provided: {records}",
             )));
         }
@@ -86,10 +85,7 @@ fn test_singular_add_and_delete_record(
             crate::traits::domain_control::DnsRecordType::TXT,
             value
         );
-        return Err(Box::new(std::io::Error::new(
-            std::io::ErrorKind::Other,
-            "Record was not removed",
-        )));
+        return Err(Box::new(std::io::Error::other("Record was not removed")));
     }
 
     Ok(())
@@ -141,8 +137,7 @@ fn test_multiple_add_and_delete_record(
             crate::traits::domain_control::DnsRecordType::TXT,
             values.join(", ")
         );
-        return Err(Box::new(std::io::Error::new(
-            std::io::ErrorKind::Other,
+        return Err(Box::new(std::io::Error::other(
             "Record was not found in the list of recorded provided: {records}",
         )));
     }
@@ -160,8 +155,7 @@ fn test_multiple_add_and_delete_record(
                 crate::traits::domain_control::DnsRecordType::TXT,
                 value
             );
-            return Err(Box::new(std::io::Error::new(
-                std::io::ErrorKind::Other,
+            return Err(Box::new(std::io::Error::other(
                 "Record was not found in the list of records provided: {records}",
             )));
         }
@@ -183,10 +177,7 @@ fn test_multiple_add_and_delete_record(
             record_count,
             removed_count
         );
-        return Err(Box::new(std::io::Error::new(
-            std::io::ErrorKind::Other,
-            "Record was not removed",
-        )));
+        return Err(Box::new(std::io::Error::other("Record was not removed")));
     }
 
     Ok(())
